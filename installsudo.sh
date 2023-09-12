@@ -3,7 +3,7 @@
 clear
 echo "Android-Sudo v1.1 by MasterDevX. Made in Ukraine."
 echo "-------------------------------------------------"
-if [ "`id | grep =0`" ]; then
+if [ "id | grep =0" ]; then
     echo "[sudo] Installing sudo..."
     printf "[sudo] Enter new password for root (leave empty for none): "
     read pass
@@ -20,7 +20,7 @@ if [ "`id | grep =0`" ]; then
         fi
     fi
     echo "[sudo] Remounting system as rw..."
-    mount -o rw,remount /system > /dev/null 2>&1
+    mount -o rw,remount / > /dev/null 2>&1
     if [ "$?" == "0" ]; then
         if [ "$nopswd" == "0" ]; then
             echo "[sudo] Creating configuration file..."
@@ -30,7 +30,7 @@ if [ "`id | grep =0`" ]; then
             echo "#!/system/bin/sh
 
 cmd=\"\$@\"
-su -c \"mount -o rw,remount /system > /dev/null 2>&1\"
+su -c \"mount -o rw,remount / > /dev/null 2>&1\"
 su -c \"chmod 0644 /etc/sudo.conf\"
 rootpass=\"\$(cat /etc/sudo.conf)\"
 su -c \"chmod 0600 /etc/sudo.conf\"
@@ -52,7 +52,7 @@ su -c \"\$cmd\"" > /system/bin/sudo
         fi
         chmod 0755 /system/bin/sudo
         echo "[sudo] Remounting system as ro..."
-        mount -o ro,remount /system > /dev/null 2>&1
+        mount -o ro,remount / > /dev/null 2>&1
         if [ "$?" == "0" ]; then
             :
         else
@@ -67,4 +67,3 @@ else
     echo "[sudo] Installer should be ran as root, exiting..."
     exit 1
 fi
-
